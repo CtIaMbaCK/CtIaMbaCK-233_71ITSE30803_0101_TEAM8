@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Update Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color:#E8E8E8;
+        }
+
+        .sct {
+            width:900px;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container sct"><h1 class="mb-3">Chỉnh sửa sách</h1>
+    <form th:action="@{/books/update/{id}(id=${book.id})}" th:object="${book}" method="post" class="needs-validation" novalidate>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Name</span>
+            <input type="text" th:field="*{name}" class="form-control" id="name" aria-label="Code" aria-describedby="basic-addon1" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">URL @</span>
+            <input type="text" th:field="*{image}" class="form-control" id="image" aria-label="Code" aria-describedby="basic-addon2" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">Category</span>
+            <select th:field="*{category}" class="form-control" id="category" aria-label="Code" aria-describedby="basic-addon3">
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                        th:selected="${category.id == book.category.id}"></option>
+            </select>
+        </div>
+
+<!--        <div class="mb-3">-->
+<!--            <label for="category_code" class="form-label">Category Code:</label>-->
+<!--            <select th:field="*{category}"-->
+<!--                    class="form-control"-->
+<!--                    id="category_code">-->
+<!--                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.category_code}"-->
+<!--                        th:selected="${category.id == product.category.id}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+        <div class="mb-3">
+            <span class="input-group-text mb-3" id="basic-addon4">Description</span>
+            <textarea
+                    th:field="*{description}" class="form-control" id="description" required>
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a th:href="@{/books}" class="btn btn-link">Cancel</a></form>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

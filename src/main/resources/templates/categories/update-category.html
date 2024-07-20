@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Update Category</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color:#E8E8E8;
+        }
+
+        .sct {
+            width:600px;
+        }
+        .a-cancel {
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container sct">
+
+    <div class="ctn justify-content-center ">
+        <h1 class="mb-4">Update Category</h1>
+        <form th:action="@{/categories/update/{id}(id=${category.id})}" th:object="${category}" method="post" class="needs-validation" novalidate>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">Code @</span>
+                <input type="text" th:field="*{category_code}" class="form-control" id="code" aria-label="Code" aria-describedby="basic-addon3" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Valid name is required.</div>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon4">Category Name</span>
+                <input type="text" th:field="*{name}" class="form-control" id="name" aria-label="Code" aria-describedby="basic-addon4" required>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Valid name is required.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary fw-medium">Update</button>
+            <a th:href="@{/categories}" class="btn btn-link fw-medium a-cancel">Cancel</a>
+        </form>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      layout:decorate="~{layout}">
+<head><title th:text="${title} ?: 'Danh Sách Cuốn Sách'">Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color:#E8E8E8;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content"><h2>Sách có trong thư viện</h2>
+
+<!--    <div><a th:href="@{/books/add}" class="btn btn-primary mb-3">Add New Book</a></div>-->
+<!--    <table class="table table-bordered table-hover">-->
+<!--        <thead class="table-dark">-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Image</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Description</th>-->
+<!--            <th>Category Name</th>-->
+<!--            <th>Category Code</th>-->
+<!--            <th>Actions</th>-->
+<!--            <th>Mượn</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each=" book : ${books}">-->
+<!--            <td th:text="${book.id}"></td>-->
+<!--            <td><img th:src="${book.image}" alt="" style="width:200px"></td>-->
+<!--            <td th:text="${book.name}"></td>-->
+<!--            <td th:text="${book.description}"></td>-->
+<!--            <td th:text="${book.category.name}"></td>-->
+<!--            <td th:text="${book.category.category_code}"></td>-->
+<!--            <td>-->
+<!--                <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-success btn-sm">Edit</a>-->
+<!--                <a-->
+<!--                        th:href="@{/books/delete/{id}(id=${book.id})}" class="btn btn-danger btn-sm"-->
+<!--                        onclick="return confirm('Are you sure?')">Delete</a>-->
+<!--            </td>-->
+<!--&lt;!&ndash;            <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                <form th:action="@{/cart/add}" method="post">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="number" name="quantity" min="1" value="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                           class="form-control d-inline-block"&ndash;&gt;-->
+<!--&lt;!&ndash;                           style="width: 70px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="hidden"&ndash;&gt;-->
+<!--&lt;!&ndash;                           th:value="${product.id}"&ndash;&gt;-->
+<!--&lt;!&ndash;                           name="productId"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="submit" class="btn btn-warning btn-sm">Add to Cart</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </form>&ndash;&gt;-->
+<!--&lt;!&ndash;            </td>&ndash;&gt;-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+    <div class="bg-image h-100 mt-4 " >
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="card mask-custom">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless text-white mb-0">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Hình Ảnh</th>
+                                            <th>Sách</th>
+<!--                                            <th>Name</th>-->
+<!--                                            <th>Description</th>-->
+<!--                                            <th>Category Name</th>-->
+<!--                                            <th>Category Code</th>-->
+                                            <th></th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each=" book : ${books}" >
+                                            <td th:text="${book.id}"></td>
+                                            <td><img th:src="${book.image}" alt="" style="width:200px; border-radius:20px; border: solid 1px black"></td>
+                                            <td>
+                                                <div class="" style="width:500px">
+                                                    <h3 th:text="${book.name}"></h3>
+                                                    <div class="d-flex mb-2">
+                                                        <span class="me-3 fst-italic">Thể Loại: <span th:text="${book.category.name}"></span></span>
+                                                        <span class="me-3 fst-italic">Code: <span th:text="${book.category.category_code}"></span></span>
+                                                    </div>
+                                                    <h6 class="">Mô tả:</h6>
+                                                    <div th:text="${book.description}"></div>
+                                                </div>
+                                            </td>
+<!--                                            <td th:text="${book.name}" class="fw-semibold"></td>-->
+<!--                                            <td th:text="${book.description}"></td>-->
+<!--                                            <td th:text="${book.category.name}"></td>-->
+<!--                                            <td th:text="${book.category.category_code}"></td>-->
+                                            <td>
+                                                <form th:action="@{/cart/add}" method="post">
+                                                    <input type="hidden"
+                                                           th:value="${book.id}"
+                                                           name="bookId"/>
+                                                    <button type="submit" class="btn btn-primary btn-sm">Mượn</button>
+                                                </form>
+
+                                                <!--                                                <form th:action="@{/borrows/add}" method="post" >-->
+<!--                                                    <input th:value="${book.id}" name="bookId"/>-->
+<!--&lt;!&ndash;                                                    <input th:value="${book.name}" name="bookName"/>&ndash;&gt;-->
+<!--                                                    <button type="submit" class="btn btn-sm fw-semibold mb-2" style="background-color:#C4C0BF; color:green">Mượn</button>-->
+<!--                                                </form>-->
+<!--                                                <a th:href="@{/borrows/add}" class="btn btn-sm fw-semibold mb-2" style="background-color:#C4C0BF; color:green" >-->
+<!--                                                    Mượn-->
+<!--                                                </a>-->
+                                            </td>
+                                            <td class=" d-flex flex-column" sec:authorize="hasAuthority('ADMIN')">
+                                                <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-sm fw-semibold mb-2" style="background-color:#C4C0BF; color:green">Edit</a>
+                                                <a
+                                                        th:href="@{/books/delete/{id}(id=${book.id})}" class="btn btn-sm fw-semibold" style="background-color:#B6ABB3; color: #FF4500"
+                                                        onclick="return confirm('Are you sure?')">Delete</a>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
